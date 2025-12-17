@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deposit, withdraw, requestLoan, payLoan } from "./accountsSlice";
+import { deposit, withdraw, requestLoan, payLoan } from "./accountSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function AccountOperations() {
@@ -27,8 +27,7 @@ function AccountOperations() {
 
   function handleRequestLoan() {
     if (!loanAmount || loanPurpose === "" || account.loan > 0) return;
-    console.log(loanAmount, loanPurpose);
-    dispatch(requestLoan(Number(loanAmount), loanPurpose));
+    dispatch(requestLoan({ amount: Number(loanAmount), purpose: loanPurpose }));
     setLoanAmount("");
     setLoanPurpose("");
   }
@@ -91,7 +90,7 @@ function AccountOperations() {
 
         {account.loan > 0 && account.balance > account.loan ? (
           <div>
-            <span>Pay back {account.loan}</span>
+            <span>Pay back {account.loan} </span>
             <button onClick={handlePayLoan}>Pay loan</button>
           </div>
         ) : (
